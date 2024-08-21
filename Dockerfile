@@ -58,4 +58,4 @@ RUN python -m pip install --user --no-cache-dir -r requirements.txt
 
 COPY . .
 EXPOSE 8501
-ENTRYPOINT ["python", "-m" ,"streamlit", "run", "portalui.py", "--server.port=8501"] 
+ENTRYPOINT ["python", "-m" ,"streamlit", "run", "streamlit_app/app.py", "--server.port=8501"] 
