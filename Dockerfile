@@ -22,8 +22,8 @@ RUN adduser \
     appuser
 
 
-#ENV LANG=C.UTF-8
-#ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
+ENV DEBIAN_FRONTEND=noninteractive
 # Install gcc and other build dependencies.
 #RUN apt update -y && apt upgrade -y
 #RUN apt-get update && apt-get install -y pkg-config sqlite3 \
