@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List
 
 import geocoder
-import googlemaps
+#import googlemaps
 import numpy as np
 import requests
 from ansistrip import ansi_strip
@@ -67,7 +67,7 @@ class Agent(object):
         self.name = name
         self.model = llm_model_name
 
-        googlemaps_api_key = os.getenv("GOOGLEMAPS_API_KEY")
+        #googlemaps_api_key = os.getenv("GOOGLEMAPS_API_KEY")
         pplx_api_key = os.getenv("PERPLEXITY_API_KEY")
 
         # Neo4j credentials
@@ -82,7 +82,7 @@ class Agent(object):
         self.query_llm = Perplexity(
             api_key=pplx_api_key, model="mistral-7b-instruct", temperature=0.5
         )
-        self.gmaps = googlemaps.Client(key=googlemaps_api_key)
+        #self.gmaps = googlemaps.Client(key=googlemaps_api_key)
         Settings.llm = self.llm
         Settings.chunk_size = 512
 
@@ -126,11 +126,11 @@ class Agent(object):
         return f"Agent {self.name}"
 
     def load_llm_model(self, llm_model_name):
-        if llm_model_name == "gpt-3.5-turbo":
+        if llm_model_name == "gpt-4o-mini":
             os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
             self.openai_api_key = os.environ["OPENAI_API_KEY"]
-            self.model_endpoint = "https://api.openai.com/v1"
-            self.llm = OpenAI(model="gpt-3.5-turbo-instruct")
+            self.model_endpoint = "https://llm.prtl.cc/v1"
+            self.llm = OpenAI(model="gpt-4o-mini")
         else:
             try:
                 self.llm = Ollama(model=llm_model_name, request_timeout=60.0)
@@ -138,11 +138,12 @@ class Agent(object):
                 raise ("Please provide a proper llm_model_name.")
 
     def load_vision_model(self, vision_model_name):
-        if vision_model_name == "gpt-4-vision-preview":
+        if vision_model_name == "gpt-4o":
             os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
             self.openai_api_key = os.environ["OPENAI_API_KEY"]
             self.mm_model = OpenAIMultiModal(
-                model="gpt-4-vision-preview",
+                model="gpt-4o",
+                api_base="https://llm.prtl.cc/v1",
                 api_key=os.getenv("OPENAI_KEY"),
                 max_new_tokens=300,
             )
