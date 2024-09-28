@@ -53,11 +53,15 @@ memary will default to the locally run models unless explicitly specified. Addit
   
    ```
    OPENAI_API_KEY="YOUR_API_KEY"
-   NEO4J_PW="YOUR_NEO4J_PW"
-   NEO4J_URL="YOUR_NEO4J_URL"
    PERPLEXITY_API_KEY="YOUR_API_KEY"
    GOOGLEMAPS_API_KEY="YOUR_API_KEY"
    ALPHA_VANTAGE_API_KEY="YOUR_API_KEY"
+   
+   Database usage (see API info):
+   FALKORDB_URL="falkor://[[username]:[password]]@[falkor_host_url]:port"
+   or
+   NEO4J_PW="YOUR_NEO4J_PW"
+   NEO4J_URL="YOUR_NEO4J_URL"
    ```
   
    </details>
@@ -68,6 +72,8 @@ memary will default to the locally run models unless explicitly specified. Addit
      <summary>API Info</summary>
 
     - [**OpenAI key**](https://openai.com/index/openai-api)
+    - [**FalkorDB**](https://app.falkordb.cloud/)
+      - Login &rarr; Click 'Subscribe` &rarr; Create a free instance on the Dashboard &rarr; use the credentials (username, passward, falkor_host_url and port).  
     - [**Neo4j**](https://neo4j.com/cloud/platform/aura-graph-database/?ref=nav-get-started-cta)
       - Click 'Start for free` &rarr; Create a free instance &rarr; Open auto-downloaded txt file and use the credentials
     - [**Perplexity key**](https://www.perplexity.ai/settings/api)
@@ -123,21 +129,6 @@ More information about creating custom tools for the LlamaIndex ReAct Agent  can
 ```python
 chat_agent.remove_tool("multiply")
 ```
-
-## Memory Dashboard 🧠
-(coming soon)
-                                                                                                 
-| Features                                           |  Benefits                                                   |
-|---------------------------------------------------|----------------------------------------------------------------|
-| 🗣️ Chat to Agent Memory                        | Access certain memories             |
-| 🧠 Analyze Agent Progress | Track how agents develop their memories over time        |
-| ⏮️ Rewind Executions                                 | Review agent memories to understand specific responses |
-| 🧑‍🧑‍🧒‍🧒 Audience Preferences                      | Understand audiences' best and most recent preferences                    |
-| ✍🏻 memaryParse                            | Inject proprietary data into agent memory & combine parsers for advanced data ingestion      |
-| 🗂️ memaryRetrieval                          | Access memories & combine retrievers for advanced memory retrieval                       |
-| 🧪 Configure Agent Memory                   | Search and combine memory databases            |
-| 🛝 Playgrounds                    | Specify models and tools used as well as benchmark different memory techniques       |
-| 🔍 Stay Up To Date                       | Receive notifications when agent memories have been added, updated or removed          |
 
 ## Core Concepts 🧪
 The current structure of memary is detailed in the diagram below.
@@ -200,7 +191,7 @@ def search(self, query: str) -> str:
 ![KG diagram](diagrams/kg.png)
 
 #### Knowledge Graphs ↔ LLMs
-- memary uses a Neo4j graph database to store knoweldge.
+- memary uses a graph database to store knoweldge.
 - Llama Index was used to add nodes into the graph store based on documents.
 - Perplexity (mistral-7b-instruct model) was used for external queries.
 
@@ -414,34 +405,6 @@ def _summarize_contexts(self, total_tokens: int):
         logging.info(f"Contexts summarized successfully. \n summary: {response}")
         logging.info(f"Total tokens after eviction: {total_tokens*EVICTION_RATE}")
 ```
-
-## Future Features 🔜 
-
-### Speak to Your Agents Memory 🗣️
-memary's **chat interface** offers a portal to access agent memories, integrating capabilitiies such as **searching**, **removing** and **viewing** agent memories **over specified periods** and more all under one umbrella available in your dashboard. 
-
-### Analyze Agent Progress 🧠
-**Track how your agents develop their memory.** We will provide access to relevant metrics to represent the growth of agent memories over time which will be available in your dashboard. 
-
-### Track Memories ⏮️
-memary **breaks down agent memory for each response generated**. A list of agent responses with their respective memories will be avilable in your dashbord. Human input (good/bad response) can help your systems improve. 
-
-### Audience Preferences 🧑‍🧑‍🧒‍🧒
-Through our proprietary memory modules, we are able to infer audience preferences for certain time periods. Audiences' **best and most recent** preferences are continously updated and will be available in your dashboard.  
-
-### memaryParse ✍🏻
-Parse and clean your proprietry data before inserting into your agent memory. memary **supports various file types** including table and image extraction. Combine different parsers to form a **parent parser** with advanced capabilities. Also access templates for predefined database schemas and set of node relationships or **define your own!** This is all available in your dashboard. 
-
-### memaryRetrieval 🗂️
-Use different techniques to retrieve agent memory. Also combine various retrievers to form a **parent retriever** with advanced capabilities. All avilable in your dashboard. 
-
-### Customizable Memory 🧪
-memary deploys knowledge graphs to **track agent actions**. View, search and configure memory for your purposes. Join different memories together for improved retrieval and toggle between your favorite graph providers. All available in your dashboard.  
-
-### Playgrounds 🛝
-- **Tool** Playground: Simply define python functions and add it as one of your agent tools. View all available tools and remove any if necessary. Do this all in your dashboard!
-- **Model** Playground: Select specific models for tasks across memary to lower system LLM costs. All models deployed on HF will be avilable in your dashboard.  
-- **Benchmarking** Playground: Easily run different memary configurations against each other to evaluate which memory options are more suitable for a specific task. 
 
 ## License 
 
